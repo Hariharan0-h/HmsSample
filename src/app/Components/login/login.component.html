@@ -1,0 +1,37 @@
+<!-- login.component.html -->
+<div class="container">
+    <div class="left-panel">
+      <div class="logo"></div>
+      <div class="welcome-text">
+        <h1>Aravind Eye Care System</h1>
+        <p>Welcome to our integrated eye care management platform. Sign in to access patient records, diagnostics, and treatment plans.</p>
+      </div>
+    </div>
+    <div class="right-panel">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+        <h2 class="fadeIn">Sign In</h2>
+        <div id="errorMessage" class="error-message" [class.show]="errorMessage">{{ errorMessage }}</div>
+        
+        <div class="input-group fadeIn delay-1">
+          <input type="text" id="username" formControlName="username" required>
+          <label for="username">Username</label>
+        </div>
+        
+        <div class="input-group fadeIn delay-2">
+          <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password" required>
+          <label for="password">Password</label>
+          <span class="password-toggle" id="togglePassword" (click)="togglePasswordVisibility()">
+            {{ showPassword ? '🔒' : '👁️' }}
+          </span>
+        </div>
+        
+        <button type="submit" class="login-btn fadeIn delay-3" [class.loading]="isLoading">
+          Login
+          <div class="loader"></div>
+        </button>
+      </form>
+      <div class="partner-text">
+        Powered by: AuroITech
+      </div>
+    </div>
+  </div>

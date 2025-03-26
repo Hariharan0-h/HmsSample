@@ -1,0 +1,396 @@
+<!-- patient-registration.component.html -->
+<div class="registration-container">
+  <div class="header">
+    <h2>Patient Registration</h2>
+  </div>
+
+  <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
+    <!-- Top section -->
+    <div class="top-section">
+      <div class="form-group">
+        <label for="patientInstance">Patient Instance</label>
+        <select id="patientInstance" formControlName="patientInstance" class="form-control">
+          <option value="new">New</option>
+          <option value="existing">Existing</option>
+          <option value="returning">Returning</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="payType">Pay/Free</label>
+        <select id="payType" formControlName="payType" class="form-control">
+          <option value="pay">PAY</option>
+          <option value="free">FREE</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="patientType">Patient Type</label>
+        <select id="patientType" formControlName="patientType" class="form-control">
+          <option value="direct">DIRECT</option>
+          <option value="referral">REFERRAL</option>
+          <option value="emergency">EMERGENCY</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="uin">UIN</label>
+        <input type="text" id="uin" formControlName="uin" class="form-control" placeholder="Auto-generated" readonly>
+      </div>
+
+      <div class="form-group">
+        <label for="mrn">MRN</label>
+        <input type="text" id="mrn" formControlName="mrn" class="form-control" placeholder="Auto-generated" readonly>
+      </div>
+
+      <div class="form-group">
+        <label for="allocation">Allocation</label>
+        <select id="allocation" formControlName="allocation" class="form-control">
+          <option value="" disabled selected>Select</option>
+          <option value="general">General</option>
+          <option value="priority">Priority</option>
+          <option value="emergency">Emergency</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <div class="tab" [class.active]="activeTab === 'personal'" (click)="activeTab = 'personal'">
+        Patient Information
+      </div>
+      <div class="tab" [class.active]="activeTab === 'additional'" (click)="activeTab = 'additional'">
+        Additional Information
+      </div>
+    </div>
+
+    <!-- Personal Information Form -->
+    <div class="tab-content" *ngIf="activeTab === 'personal'">
+      <div class="form-row">
+        <div class="form-column">
+          <div class="form-group">
+            <label for="firstName">First Name <span class="required">*</span></label>
+            <input type="text" id="firstName" formControlName="firstName" class="form-control" required>
+            <div class="error-message" *ngIf="patientForm.get('firstName')?.invalid && patientForm.get('firstName')?.touched">
+              First name is required
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" formControlName="lastName" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="age">Age <span class="required">*</span></label>
+            <div class="age-inputs">
+              <div class="age-input">
+                <input type="number" id="ageYears" formControlName="ageYears" class="form-control small-input" min="0" max="120">
+                <span>Yrs</span>
+              </div>
+              <div class="age-input">
+                <input type="number" id="ageMonths" formControlName="ageMonths" class="form-control small-input" min="0" max="11">
+                <span>Mns</span>
+              </div>
+              <div class="age-input">
+                <input type="number" id="ageDays" formControlName="ageDays" class="form-control small-input" min="0" max="31">
+                <span>Days</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="dob">DOB</label>
+            <input type="date" id="dob" formControlName="dob" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="gender">Gender <span class="required">*</span></label>
+            <select id="gender" formControlName="gender" class="form-control" required>
+              <option value="" disabled selected>Select</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="nextOfKin">Next of Kin <span class="required">*</span></label>
+            <div class="input-group">
+              <select id="nextOfKinRelation" formControlName="nextOfKinRelation" class="form-control relation-select">
+                <option value="" disabled selected>Select</option>
+                <option value="spouse">Spouse</option>
+                <option value="parent">Parent</option>
+                <option value="child">Child</option>
+                <option value="sibling">Sibling</option>
+              </select>
+              <input type="text" id="nextOfKinName" formControlName="nextOfKinName" class="form-control" placeholder="Name">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="normalReferral">Normal/Referral</label>
+            <select id="normalReferral" formControlName="normalReferral" class="form-control">
+              <option value="normal">Normal</option>
+              <option value="referral">Referral</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-column">
+          <div class="form-group">
+            <label for="doorStreet">Door/Street</label>
+            <input type="text" id="doorStreet" formControlName="doorStreet" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="locality">Locality</label>
+            <input type="text" id="locality" formControlName="locality" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="city">City / Area</label>
+            <input type="text" id="city" formControlName="city" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="pinCode">Pin Code</label>
+            <input type="text" id="pinCode" formControlName="pinCode" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="taluk">Taluk <span class="required">*</span></label>
+            <select id="taluk" formControlName="taluk" class="form-control" required>
+              <option value="" disabled selected>Select</option>
+              <option *ngFor="let taluk of talukOptions" [value]="taluk">{{taluk}}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="district">District</label>
+            <input type="text" id="district" formControlName="district" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="state">State</label>
+            <input type="text" id="state" formControlName="state" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="country">Country</label>
+            <input type="text" id="country" formControlName="country" class="form-control">
+          </div>
+        </div>
+
+        <div class="form-column">
+          <div class="form-group">
+            <label for="mobileNo">Mobile No</label>
+            <input type="tel" id="mobileNo" formControlName="mobileNo" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="aadhaarNo">Aadhaar No</label>
+            <input type="text" id="aadhaarNo" formControlName="aadhaarNo" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="phoneNo">Phone No</label>
+            <input type="tel" id="phoneNo" formControlName="phoneNo" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="poBox">PO Box</label>
+            <input type="text" id="poBox" formControlName="poBox" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="mrtLocation">MRT Location</label>
+            <input type="text" id="mrtLocation" formControlName="mrtLocation" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" formControlName="email" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="purposeOfVisit">Purpose of Visit <span class="required">*</span></label>
+            <select id="purposeOfVisit" formControlName="purposeOfVisit" class="form-control" required>
+              <option value="" disabled>Select</option>
+              <option value="regular">Regular Investigation - Units</option>
+              <option value="followup">Follow-up</option>
+              <option value="emergency">Emergency</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Mobile App Consent Form</label>
+            <div class="radio-group">
+              <label class="radio-label">
+                <input type="radio" formControlName="mobileAppConsent" value="yes">
+                <span class="radio-text">Yes</span>
+              </label>
+              <label class="radio-label">
+                <input type="radio" formControlName="mobileAppConsent" value="no">
+                <span class="radio-text">No</span>
+              </label>
+              <input type="text" formControlName="mobileAppNo" class="form-control" placeholder="Mobile No">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-column">
+          <div class="photo-id-container">
+            <div class="photo-id-label">Photo Identity</div>
+            <div class="photo-id-box">
+              <img [src]="photoIdSrc" *ngIf="photoIdSrc" alt="Patient Photo">
+              <div class="photo-placeholder" *ngIf="!photoIdSrc">
+                <i class="fa fa-user-circle"></i>
+              </div>
+              <div class="photo-upload-btn">
+                <label for="photoUpload">Upload</label>
+                <input type="file" id="photoUpload" (change)="onPhotoUpload($event)" accept="image/*" hidden>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Have you ever registered before in any branch of Aravind Eye Hospital?</label>
+            <div class="checkbox-group">
+              <input type="checkbox" id="previouslyRegistered" formControlName="previouslyRegistered">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Do you have any health insurance subscription?</label>
+            <div class="checkbox-group">
+              <input type="checkbox" id="hasInsurance" formControlName="hasInsurance">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Assign Doctor</label>
+            <div class="checkbox-group">
+              <input type="checkbox" id="assignDoctor" formControlName="assignDoctor">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payment Information -->
+      <div class="payment-section">
+        <div class="section-header">
+          <h3>Payment Information</h3>
+        </div>
+        <div class="payment-form">
+          <div class="form-group">
+            <label for="patientCategory">Patient Category</label>
+            <select id="patientCategory" formControlName="patientCategory" class="form-control">
+              <option value="full">FULL PAYMENT</option>
+              <option value="partial">PARTIAL PAYMENT</option>
+              <option value="free">FREE</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="patientSubCategory">Patient Sub Category</label>
+            <select id="patientSubCategory" formControlName="patientSubCategory" class="form-control">
+              <option value="" disabled selected>Select</option>
+              <option value="general">General</option>
+              <option value="senior">Senior Citizen</option>
+              <option value="child">Child</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="paymentType">Payment Type</label>
+            <select id="paymentType" formControlName="paymentType" class="form-control">
+              <option value="cash">CASH</option>
+              <option value="card">CARD</option>
+              <option value="upi">UPI</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="fees">Fees</label>
+            <div class="fee-input">
+              <input type="number" id="fees" formControlName="fees" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Additional Information Tab -->
+    <div class="tab-content" *ngIf="activeTab === 'additional'">
+      <div class="form-row">
+        <div class="form-column">
+          <div class="form-group">
+            <label for="language">Language</label>
+            <input type="text" id="language" formControlName="language" class="form-control" placeholder="Auto-generated">
+          </div>
+          
+          <div class="form-group">
+            <label for="occupation">Occupation</label>
+            <input type="text" id="occupation" formControlName="occupation" class="form-control">
+          </div>
+          
+          <div class="form-group">
+            <label for="education">Education</label>
+            <input type="text" id="education" formControlName="education" class="form-control">
+          </div>
+        </div>
+        
+        <div class="form-column">
+          <div class="form-group">
+            <label for="familyIncome">Family Income</label>
+            <input type="text" id="familyIncome" formControlName="familyIncome" class="form-control">
+          </div>
+          
+          <div class="form-group">
+            <label for="religion">Religion</label>
+            <input type="text" id="religion" formControlName="religion" class="form-control">
+          </div>
+        </div>
+        
+        <div class="form-column">
+          <div class="form-group">
+            <label for="nationality">Nationality</label>
+            <input type="text" id="nationality" formControlName="nationality" class="form-control">
+          </div>
+          
+          <div class="form-group">
+            <label for="bloodGroup">Blood Group</label>
+            <select id="bloodGroup" formControlName="bloodGroup" class="form-control">
+              <option value="" disabled selected>Select</option>
+              <option value="a+">A+</option>
+              <option value="a-">A-</option>
+              <option value="b+">B+</option>
+              <option value="b-">B-</option>
+              <option value="ab+">AB+</option>
+              <option value="ab-">AB-</option>
+              <option value="o+">O+</option>
+              <option value="o-">O-</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="medicalHistory">Medical History</label>
+            <textarea id="medicalHistory" formControlName="medicalHistory" class="form-control" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="button" class="btn btn-secondary" (click)="onRecall()">Recall</button>
+      <button type="button" class="btn btn-info" (click)="onReprint()">Reprint</button>
+      <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
+      <button type="button" class="btn btn-warning" (click)="onRouteCard()">Route card</button>
+      <button type="button" class="btn btn-success" (click)="onViewCollection()">View Collection</button>
+      <button type="button" class="btn btn-primary" (click)="onUnitLoad()">Unit Load</button>
+    </div>
+  </form>
+</div>
